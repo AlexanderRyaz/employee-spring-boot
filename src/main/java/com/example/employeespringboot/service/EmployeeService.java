@@ -13,8 +13,8 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public void createEmployee(Employee employee) throws EmployeeDataException {
-        employeeRepository.createEmployee(employee);
+    public Employee createEmployee(Employee employee) throws EmployeeDataException {
+        return employeeRepository.createEmployee(employee);
     }
 
     public List<Employee> getAllEmployees() {

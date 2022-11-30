@@ -18,13 +18,14 @@ public class EmployeeRepository {
 
     private static final Map<Integer, Employee> employeeMap = new HashMap<>();
 
-    public void createEmployee(Employee employee) throws EmployeeDataException {
+    public Employee createEmployee(Employee employee) throws EmployeeDataException {
         checkEmployee(employee);
         int id = counter++;
         employee.setId(id);
         employee.setFirstName(StringUtils.capitalize(employee.getFirstName()));
         employee.setLastName(StringUtils.capitalize(employee.getLastName()));
         employeeMap.put(id, employee);
+        return employee;
     }
 
     public List<Employee> getAllEmployees() {
