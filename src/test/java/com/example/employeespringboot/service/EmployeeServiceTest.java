@@ -31,20 +31,17 @@ class EmployeeServiceTest extends ServiceTest {
         employee.setSalary(17000);
         employee.setId(1);
 
-        Employee employee1 = new Employee();
-        employee1.setLastName("Иванов");
-        employee1.setFirstName("саша");
-        employee1.setDepartment(1);
-        employee1.setSalary(17000);
+        Employee employee1 = buildEmployee("саша", "Иванов", 1, 17000);
 
         when(employeeRepository.createEmployee(any())).thenReturn(employee);
         Employee e = employeeService.createEmployee(employee1);
         assertEquals("Иванов", e.getLastName());
-        assertEquals("Cаша", e.getFirstName());
+        assertEquals("Саша", e.getFirstName());
         assertEquals(1, e.getDepartment());
         assertEquals(17000, e.getSalary());
         assertEquals(1, e.getId());
     }
+
 
     @Test
     void getAllEmployees() {

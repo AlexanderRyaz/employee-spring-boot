@@ -32,15 +32,16 @@ public class EmployeeRepository {
     }
 
 
-
-
     private void checkEmployee(Employee employee) throws EmployeeDataException {
         boolean firstNameBlank = StringUtils.isBlank(employee.getFirstName());
         boolean lastNameBlank = StringUtils.isBlank(employee.getLastName());
         boolean firstNameAlphabetic = StringUtils.isAlpha(employee.getFirstName());
         boolean lastNameAlphabetic = StringUtils.isAlpha(employee.getLastName());
-        if (firstNameBlank || lastNameBlank || !firstNameAlphabetic || !lastNameAlphabetic) {
-            throw new EmployeeDataException("Неправильно введены данные пользователя");
+        if (firstNameBlank || !firstNameAlphabetic) {
+            throw new EmployeeDataException("Неправильно введено имя пользователя");
+        }
+        if (lastNameBlank || !lastNameAlphabetic) {
+            throw new EmployeeDataException("Неправильно введена фамилия пользователя");
         }
     }
 }
