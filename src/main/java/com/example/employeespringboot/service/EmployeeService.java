@@ -1,43 +1,47 @@
 package com.example.employeespringboot.service;
 
+import com.example.employeespringboot.exeption.EmployeeDataException;
 import com.example.employeespringboot.model.Employee;
+import com.example.employeespringboot.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class EmployeeService {
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
-    private static int counter = 1;
-
-    private static final Map<Integer, Employee> employeeMap = new HashMap<>();
-
-    public void createEmployee(Employee employee) {
-        int id = counter++;
-        employee.setId(id);
-        employeeMap.put(id, employee);
+    public Employee createEmployee(Employee employee) throws EmployeeDataException {
+        return employeeRepository.createEmployee(employee);
     }
 
     public List<Employee> getAllEmployees() {
-        return employeeMap.values().stream().toList();
+        return employeeRepository.getAllEmployees();
     }
 
     public int getSumSalary() {
-        return employeeMap.values().stream().mapToInt(Employee::getSalary).sum();
+
+        return getAllEmployees().stream().mapToInt(Employee::getSalary).sum();
     }
 
     public Employee getEmployeeWithMinSalary() {
-        return employeeMap.values().stream().min(Comparator.comparingInt(Employee::getSalary))
+        return getAllEmployees().stream().min(Comparator.comparingInt(Employee::getSalary))
                 .orElse(null);
     }
 
     public Employee getEmployeeWithMaxSalary() {
-        return employeeMap.values().stream().max(Comparator.comparingInt(Employee::getSalary))
+        return getAllEmployees().stream().max(Comparator.comparingInt(Employee::getSalary))
                 .orElse(null);
     }
 
     public List<Employee> getEmployeesWithSalaryGreaterAverage() {
-        double averageSalary = employeeMap.values().stream().mapToInt(Employee::getSalary).average().getAsDouble();
-        return employeeMap.values().stream().filter(employee -> employee.getSalary()>averageSalary).toList();
+        List<Employee> allEmployees = getAllEmployees();
+        double averageSalary = allEmployees.stream().mapToDouble(Employee::getSalary).average().getAsDouble();
+        return allEmployees.stream().filter(employee -> employee.getSalary() > averageSalary).toList();
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.employeespringboot.controller;
 
+import com.example.employeespringboot.exeption.EmployeeDataException;
 import com.example.employeespringboot.model.Employee;
 import com.example.employeespringboot.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ public class EmployeeController {
     private EmployeeService service;
 
     @PostMapping
-    public ResponseEntity<Void> createEmployee(@RequestBody Employee employee) {
-        service.createEmployee(employee);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) throws EmployeeDataException {
+        Employee e = service.createEmployee(employee);
+        return new ResponseEntity<>(e,HttpStatus.OK);
     }
 
     @GetMapping
