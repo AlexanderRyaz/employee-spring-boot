@@ -17,9 +17,9 @@ public class EmployeeController {
     private EmployeeService service;
 
     @PostMapping
-    public ResponseEntity<Void> createEmployee(@RequestBody Employee employee) throws EmployeeDataException {
-        service.createEmployee(employee);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) throws EmployeeDataException {
+        Employee e = service.createEmployee(employee);
+        return new ResponseEntity<>(e,HttpStatus.OK);
     }
 
     @GetMapping
